@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="PromptGeneratorApp.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Generador Inteligente de Prompts">
+
+    <Grid
+        RowDefinitions="Auto,Auto,Auto,*"
+        Padding="24"
+        RowSpacing="16">
+
+        <StackLayout Grid.Row="0" Orientation="Horizontal" Spacing="8">
+            <Label Text=".NET MAUI" Style="{StaticResource BadgeStyle}" />
+            <Label Text="XAML" Style="{StaticResource BadgeStyle}" BackgroundColor="{DynamicResource SecondaryColor}" />
+            <Label Text="C#" Style="{StaticResource BadgeStyle}" BackgroundColor="{DynamicResource AccentColor}" />
+            <Label Text="SQLite" Style="{StaticResource BadgeStyle}" BackgroundColor="#34D399" />
+        </StackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="12">
+            <Entry
+                Placeholder="Título del prompt"
+                Text="{Binding Title, Mode=TwoWay}" />
+            <Editor
+                Placeholder="Describe el contexto para el prompt"
+                AutoSize="TextChanges"
+                Text="{Binding Context, Mode=TwoWay}" />
+        </VerticalStackLayout>
+
+        <Picker
+            Grid.Row="2"
+            Title="Selecciona el lenguaje principal"
+            ItemsSource="{Binding Languages}"
+            SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" />
+
+        <VerticalStackLayout Grid.Row="3" Spacing="12">
+            <Button
+                Text="Guardar prompt"
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                Command="{Binding SaveCommand}"
+                TextColor="White" />
+
+            <CollectionView ItemsSource="{Binding Prompts}">
+                <CollectionView.EmptyView>
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        Text="Aún no hay prompts guardados."
+                        TextColor="#D1D5DB" />
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Margin="0,0,0,12"
+                            BorderColor="#3730A3"
+                            CornerRadius="12">
+                            <VerticalStackLayout>
+                                <Label FontAttributes="Bold" FontSize="18" Text="{Binding Title}" />
+                                <Label FontSize="14" Text="{Binding Context}" />
+                                <Label FontSize="12" TextColor="#A855F7" Text="{Binding Language}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
